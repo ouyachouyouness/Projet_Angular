@@ -8,6 +8,7 @@ import { PostService } from '../post.service';
 })
 export class PostComponent implements OnInit {
   @Input() post?: Post;
+  @Input() index: number = 0;
   constructor(private postService: PostService) { }
 
   ngOnInit(): void {
@@ -16,7 +17,10 @@ export class PostComponent implements OnInit {
   }
   onDelete() {
     console.log("called onDelete()");
-    this.postService.deletePost(0)
+
+
+
+    this.postService.deletePost(this.index);
 
   }
 
