@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, MaxLengthValidator, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Post } from '../post.model';
 import { PostService } from '../post.service';
 
@@ -11,15 +11,34 @@ import { PostService } from '../post.service';
 })
 export class PostEditComponent implements OnInit {
   form!: FormGroup;
-  constructor(private postService: PostService, private router: Router) { }
+  index : number = 0;
+  constructor(private postService: PostService, private router: Router,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    let title = '';
+    let description= '';
+    let imagePath = '';
+
+
+    this.route.params.subscribe((params: Params) => {
+        if(params['index']){
+          console.log(params['index']);
+
+          this.index = params['index'];
+
+          const post = this.postService.getPost(this.index);
+          title = post.title;
+          description = post.description;
+          imagePath = post.imagePath;
+        }
+    });
+
     this.form = new FormGroup({
-      title: new FormControl(null, [
+      title: new FormControl(title, [
         Validators.required,
         Validators.maxLength(10)]),
-      description: new FormControl(null, [Validators.required]),
-      imagePath: new FormControl(null, [Validators.required]),
+      description: new FormControl(description, [Validators.required]),
+      imagePath: new FormControl(imagePath, [Validators.required]),
 
     })
   }
