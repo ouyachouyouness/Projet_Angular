@@ -12,6 +12,7 @@ import { PostService } from '../post.service';
 export class PostEditComponent implements OnInit {
   form!: FormGroup;
   index : number = 0;
+  editMode = false
   constructor(private postService: PostService, private router: Router,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -30,6 +31,8 @@ export class PostEditComponent implements OnInit {
           title = post.title;
           description = post.description;
           imagePath = post.imagePath;
+
+          this.editMode = true
         }
     });
 
