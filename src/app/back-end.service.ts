@@ -2,6 +2,7 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Post } from "./post.model";
 import { PostService } from "./post.service";
+import {tap} from 'rxjs/operators'
 
 //data base path
 //https://live-posts-4a2f7-default-rtdb.firebaseio.com/
@@ -29,5 +30,14 @@ export class backEndService {
     }
 
     //fetch
-
+    fetchData(){
+        this.http.get<Post[]>('https://live-posts-4a2f7-default-rtdb.firebaseio.com/posts.json')
+        .pipe(
+            tap((listOfPosts: Post[]) => {
+            console.log(listOfPosts);
+            
+        }))
+        .subscribe();
+    }
 }
+
