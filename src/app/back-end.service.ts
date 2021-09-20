@@ -19,7 +19,12 @@ export class backEndService {
         const listOfPosts : Post[] = this.postService.getPosts()
 
         //step2 
-        this.http.put('https://live-posts-4a2f7-default-rtdb.firebaseio.com/posts.json', listOfPosts)
+        this.http.put('https://live-posts-4a2f7-default-rtdb.firebaseio.com/posts.json',
+         listOfPosts
+        ).subscribe((res) => {
+            console.log(res);
+            
+        })
 
     }
 
